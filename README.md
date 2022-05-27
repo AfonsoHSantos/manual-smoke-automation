@@ -1,4 +1,4 @@
-# Automation Status
+## Automation Status
 
 Validate the name of the compressed bundle ✅
 Assert the .liferay-home file is present within the liferay home directory ✅	
