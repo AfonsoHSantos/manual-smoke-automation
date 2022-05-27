@@ -1,0 +1,41 @@
+definition {
+    test ManualSmoke {
+        AssertTextEquals(
+            locator1 = "Home#SITE_NAME",
+            value1 = "Liferay DXP");
+
+        AssertElementPresent(locator1 = "Home#CUSTOM_LOGO");
+
+        AssertTextEquals(
+            locator1 = "Home#FOOTER",
+            value1 = "Powered By Liferay");
+
+        for (var navigation : list "Workflow-Applications:Metrics,Custom Apps-Applications:Remote Apps,Order Management-Commerce:Orders,Product Management-Commerce:Catalogs,Sites-Control Panel:Sites,Configuration-Control Panel:Instance Settings") {
+            var catPan = StringUtil.extractFirst("${navigation}", ":");
+            var categoryName = StringUtil.extractFirst("${catPan}", "-");
+            var panelName = StringUtil.extractLast("${catPan}", "-");
+			var portletName = StringUtil.extractLast("${navigation}", ":");
+
+            var currentTimeSecond = DateUtil.getFormattedCurrentDate("ss");
+
+            echo("${categoryName} > ${panelName} > ${portletName} Start load time: ${currentTimeSecond}");
+
+            ApplicationsMenu.gotoPortlet(
+                category = "${categoryName}",
+                panel = "${panelName}",
+                portlet = "${portletName}");
+
+            WaitForPageLoad();
+
+            var finalTimeSecond = DateUtil.getFormattedCurrentDate("ss");
+
+            var maxTime = ${currentTimeSecond} + 3;
+
+            TestUtils.isLessThan(
+                actual = "${currentTimeSecond}",
+                expected = "${maxTime}");   
+
+            echo("${categoryName} > ${panelName} > ${portletName} Final Time: ${finalTimeSecond}");
+        }
+	}
+}
