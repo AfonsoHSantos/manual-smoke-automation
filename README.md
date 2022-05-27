@@ -1,6 +1,7 @@
 # Automation Status
 
 Validate the name of the compressed bundle ✅
+
 Assert the .liferay-home file is present within the liferay home directory ✅	
 Validate the contents within the readme.html in the liferay home directory ✅	
 Assert the hash within the .githash file in the liferay home directory ✅	
